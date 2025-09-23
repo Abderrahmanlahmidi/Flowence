@@ -1,0 +1,37 @@
+{
+  "name": "flowence",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "\"node app.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abderrahmanlahmidi/Flowence.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Abderrahmanlahmidi/Flowence/issues"
+  },
+  "homepage": "https://github.com/Abderrahmanlahmidi/Flowence#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.2",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.2",
+    "mysql2": "^3.15.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.1",
+    "postcss": "^8.5.6"
+  }
+}
