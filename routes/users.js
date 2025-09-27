@@ -1,72 +1,118 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const db = require("../config/db");
+const { User } = require("../models");
+const { redirectIfAuth } = require("../Middlewares/authentication");
+const nodeMailer = require("nodemailer");
 
-router.get("/login", (req, res) => { res.render("login", {success:null, error:null}); });
-router.get("/register", (req, res) => {
-    res.render("register", { success: false });
+router.get("/register", redirectIfAuth, (req, res) => {
+  res.render("auth/register", { success: false, error: null, layout: "layouts/main" });
 });
 
-router.post("/register", (req, res) => {
-    const {firstName, lastName, email, password} = req.body
+router.post("/register", async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
 
-    if(!firstName || !lastName || !email || !password){
-        res.send("All fields are required")
+  if (!firstName || !lastName || !email || !password) {
+    return res.render("auth/register", { success: false, error: "Invalid fields", layout: "layouts/main" });
+  }
+
+  try {
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.render("auth/register", { success: false, error: "Email already registered", layout: "layouts/main" });
     }
 
-    const saltRounds = 10;
-    const passwordHash = bcrypt.hashSync(password, saltRounds);
-    const roleId = 1;
+    const passwordHash = await bcrypt.hash(password, 10);
 
-    const sql = "INSERT INTO utilisateur (firstName,  lastName, email, passwordHash, roleId) values (?, ?, ?, ?, ?)";
-    db.query(sql, [firstName, lastName, email, passwordHash, roleId], (err, result) => {
-        if (err) throw err;
-        res.render("register", {success: true});
-    });
-})
+    await User.create({ firstName, lastName, email, passwordHash });
 
-
-router.post("/login", (req, res) => {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-        return res.render("login", { success: false, error: "Please enter a valid email and password" });
-    }
-
-    const sql = "SELECT * FROM utilisateur WHERE email = ?";
-    db.query(sql, [email], (err, result) => {
-        if (err) throw err;
-
-        if (result.length === 0) {
-            return res.render("login", { success: false, error: "Email not found" });
-        }
-
-        const user = result[0];
-        bcrypt.compare(password, user.passwordHash, (err, isMatch) => {
-            if (err) throw err;
-
-            if (!isMatch) {
-                return res.render("login", { success: false, error: "Invalid password" });
-            }
-
-            req.session.user = {
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email
-            };
-
-            res.redirect("/users/profile");
-        });
-    });
+    return res.render("auth/register", { success: true, error: null, layout: "layouts/main" });
+  } catch (err) {
+    console.error(err);
+    return res.render("auth/register", { success: false, error: "Something went wrong", layout: "layouts/main" });
+  }
 });
 
-router.get("/profile", (req, res) => {
-    if (!req.session.user) {
-        return res.send("Not logged in");
-    }
-    res.send(`Welcome ${req.session.user.firstName} ${req.session.user.lastName}`);
+
+router.get("/login", redirectIfAuth, (req, res) => {
+  res.render("auth/login", { success: null, error: null, layout: "layouts/main" });
 });
 
+
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.render("auth/login", { success: false, error: "Enter email and password", layout: "layouts/main" });
+  }
+
+  try {
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.render("auth/login", { success: false, error: "Email not found", layout: "layouts/main" });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.passwordHash);
+    if (!validPassword) {
+      return res.render("auth/login", { success: false, error: "Invalid password", layout: "layouts/main" });
+    }
+
+    req.session.user = { id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email };
+    return res.redirect("/dashboard");
+  } catch (err) {
+    console.error(err);
+    return res.render("auth/login", { success: false, error: "Something went wrong", layout: "layouts/main" });
+  }
+});
+
+router.get("/forgotPassword", (req, res) => {
+  res.render("auth/forgot", { success: null, error: null, layout: "layouts/main", stage: 1 });
+});
+
+router.post("/forgotPassword", async (req, res) => {
+  const { email, code } = req.body;
+
+  try {
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.render("auth/forgot", { success: null, error: "Email unavailable", layout: "layouts/main", stage: 1 });
+    }
+
+
+    if (!code) {
+      const verificationCode = Math.floor(Math.random() * 1000000) + 1;
+
+  
+
+      return res.render("auth/forgot", {
+        success: "The confirmation code has been sent.",
+        error: null,
+        layout: "layouts/main",
+        stage: 2,
+      });
+    }
+
+    if (code === "123456") {
+      return res.render("auth/forgot", { success: "Code verified, you can reset your password.", error: null, stage: 3 });
+    }
+
+    return res.render("auth/forgot", { success: null, error: "Invalid code", stage: 2 });
+  } catch (err) {
+    console.error(err);
+    return res.render("auth/forgot", { success: null, error: "Something went wrong", stage: 1 });
+  }
+});
+
+router.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+      return res.redirect("/dashboard");
+    }
+    res.clearCookie("connect.sid");
+    res.redirect("/users/login");
+  });
+});
 
 module.exports = router;

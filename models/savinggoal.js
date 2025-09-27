@@ -1,0 +1,16 @@
+// models/SavingGoal.js
+module.exports = (sequelize, DataTypes) => {
+  const SavingGoal = sequelize.define("SavingGoal", {
+    title: DataTypes.STRING,
+    targetAmount: DataTypes.DECIMAL,
+    currentAmount: DataTypes.DECIMAL,
+    deadline: DataTypes.DATE
+  });
+
+  SavingGoal.associate = (models) => {
+    SavingGoal.belongsTo(models.User, { foreignKey: "userId" });
+    SavingGoal.belongsTo(models.Category, { foreignKey: "categoryId" });
+  };
+
+  return SavingGoal;
+};
