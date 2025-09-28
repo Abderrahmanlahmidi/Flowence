@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Category = sequelize.define("Category", {
     name: DataTypes.STRING,
-    type: DataTypes.STRING,
+    description: DataTypes.STRING,
   });
 
   Category.associate = (models) => {
