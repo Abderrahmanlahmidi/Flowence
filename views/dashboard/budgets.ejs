@@ -1,23 +1,138 @@
-<h2 class="text-xl font-bold mb-4">Monthly Budgets</h2>
+<% if ((typeof error !== "undefined" && error) || (typeof success !==
+"undefined" && success)) { %>
+<div id="toast" class="fixed top-5 right-5 z-50 flex items-center max-w-xs p-4 mb-4 rounded-lg shadow <%= error ? 'text-red-700 bg-red-50 border border-red-200 dark:text-red-400 dark:bg-red-900/20 dark:border-red-800' : '' %> <%= success ? 'text-green-700 bg-green-50 border border-green-200 dark:text-green-400 dark:bg-green-900/20 dark:border-green-800' : '' %>" role="alert">
+  <div class="text-sm font-medium flex-1"><%= error || success %></div>
 
-<table class="min-w-full bg-white dark:bg-gray-800 rounded-lg shadow">
-  <thead class="bg-gray-50 dark:bg-gray-700">
-    <tr>
-      <th class="px-4 py-2">Category</th>
-      <th class="px-4 py-2">Budget</th>
-      <th class="px-4 py-2">Spent</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="border-t border-gray-200 dark:border-gray-700">
-      <td class="px-4 py-2">Food</td>
-      <td class="px-4 py-2">300 USD</td>
-      <td class="px-4 py-2">150 USD</td>
-    </tr>
-    <tr class="border-t border-gray-200 dark:border-gray-700">
-      <td class="px-4 py-2">Transport</td>
-      <td class="px-4 py-2">100 USD</td>
-      <td class="px-4 py-2">75 USD</td>
-    </tr>
-  </tbody>
-</table>
+  <button type="button" onclick="this.parentElement.style.display='none'" class="<%= error ? 'ml-3 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300' : '' %> <%= success ? 'ml-3 text-green-500 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300' : '' %>">
+    ✕
+  </button>
+</div>
+<% } %>
+<div class="space-y-6 mb-6">
+  <!-- Page Header -->
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Budgets</h1>
+    <p class="text-gray-600 dark:text-gray-400">Manage your budgets</p>
+  </div>
+
+  <!-- Add Budget Form -->
+  <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+    <h2 class="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-4">
+      Add New Budget
+    </h2>
+    <form action="#" method="post" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <input name="montantPrevu" type="number" placeholder="Montant prévu" class="p-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <select name="categoryId" class="p-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <% categories.forEach(cat => { %>
+        <option value="<%= cat.id %>"><%= cat.name %></option>
+        <% }) %>
+      </select>
+      <input name="periode" type="date" class="p-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors col-span-1 md:col-span-4">
+        Add Budget
+      </button>
+    </form>
+  </div>
+
+ <div id="updateFormContainer" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden">
+  <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow w-96">
+    <h2 class="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-4">Update Budget</h2>
+    <form id="updateForm" method="POST">
+      <input type="number" name="montantPrevu" id="updateMontant" class="p-2 border rounded w-full mb-2"/>
+      <select name="categoryId" id="updateCategory" class="p-2 border rounded w-full mb-2">
+        <% categories.forEach(cat => { %>
+          <option value="<%= cat.id %>"><%= cat.name %></option>
+        <% }) %>
+      </select>
+      <input type="date" name="periode" id="updatePeriode" class="p-2 border rounded w-full mb-4"/>
+      <div class="flex justify-end gap-2">
+        <button type="button" onclick="closeUpdateForm()" class="px-4 py-2 bg-gray-400 rounded hover:bg-gray-500 text-white">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-white">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+  <!-- Budgets Table -->
+  <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+    <h2 class="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-4">
+      All Budgets
+    </h2>
+    <table class="min-w-full border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+      <thead class="bg-slate-50 dark:bg-slate-700">
+        <tr>
+          <th class="px-4 py-3 text-left text-sm font-medium text-slate-600 dark:text-slate-300">
+            Category
+          </th>
+          <th class="px-4 py-3 text-left text-sm font-medium text-slate-600 dark:text-slate-300">
+            Montant prévu
+          </th>
+          <th class="px-4 py-3 text-left text-sm font-medium text-slate-600 dark:text-slate-300">
+            Montant dépensé
+          </th>
+          <th class="px-4 py-3 text-left text-sm font-medium text-slate-600 dark:text-slate-300">
+            Période
+          </th>
+          <th class="px-4 py-3 text-left text-sm font-medium text-slate-600 dark:text-slate-300">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+        <% budgets.forEach(budget => { %>
+        <tr>
+          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">
+            <%= budget.Category ? budget.Category.name : "N/A" %>
+          </td>
+          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">
+            <%= budget.montantPrevu %> MAD
+          </td>
+          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">
+            <%= budget.montantDepense || 0 %> MAD
+          </td>
+          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">
+            <%= budget.periode %>
+          </td>
+
+          <td class="px-4 py-3 text-center">
+            <form action="/dashboard/budgets/delete/<%= budget.id %>" method="POST" onsubmit="return confirm('Are you sure?');">
+              <button type="submit" class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+                Delete
+              </button>
+              <button onclick="openUpdateForm(<%= budget.id %>, <%= budget.montantPrevu %>, '<%= budget.periode %>', <%= budget.categoryId %>)" type="button" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors">
+                Update
+              </button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<script>
+function openUpdateForm(id, montantPrevu, categoryId, periode) {
+  document.getElementById("updateForm").action = "/dashboard/budgets/update/" + id;
+  document.getElementById("updateMontant").value = montantPrevu;
+  document.getElementById("updateCategory").value = categoryId;
+
+  if (periode && periode !== "null") {
+    const date = new Date(periode);
+    document.getElementById("updatePeriode").value = date.toISOString().split("T")[0];
+  } else {
+    document.getElementById("updatePeriode").value = "";
+  }
+
+  document.getElementById("updateFormContainer").classList.remove("hidden");
+}
+
+function closeUpdateForm() {
+  document.getElementById("updateFormContainer").classList.add("hidden");
+}
+</script>
+

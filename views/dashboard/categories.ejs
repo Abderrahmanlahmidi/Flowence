@@ -38,7 +38,8 @@
       Add New Category
     </h2>
     <form
-      action="/dashboard/categories"
+      id="updateForm" 
+      action="/dashboard/budgets/update/<%= budget.id %>"
       method="post"
       class="grid grid-cols-1 md:grid-cols-3 gap-4"
     >
@@ -60,7 +61,7 @@
       >
         Add Category
       </button>
-    </form>
+    </>
   </div>
 
   <!-- Categories Table -->
@@ -98,22 +99,21 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
-        <tr>
-          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">Food</td>
-          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">
-            this for food
-          </td>
-          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">
-            2025-09-27
-          </td>
-          <td class="px-4 py-3">
-            <button
-              class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
+        <% categories.forEach(cat => { %>
+  <tr>
+    <td class="px-4 py-3 text-slate-600 dark:text-slate-400"><%= cat.name %></td>
+    <td class="px-4 py-3 text-slate-600 dark:text-slate-400"><%= cat.description %></td>
+    <td class="px-4 py-3 text-slate-600 dark:text-slate-400"><%= cat.createdAt.toISOString().split('T')[0] %></td>
+    <td class="px-4 py-3">
+<form action="/dashboard/category/delete/<%= cat.id %>" method="POST" onsubmit="return confirm('Are you sure?');">
+      <button type="submit" class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+        Delete
+      </button>
+    </form>
+    </td>
+  </tr>
+<% }) %>
+
       </tbody>
     </table>
   </div>
