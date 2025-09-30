@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.ENUM("income", "expense"),
     date: DataTypes.DATE,
     paymentMethod: DataTypes.STRING,
-    dateTime: DataTypes.DATE
   });
 
   Transaction.associate = (models) => {

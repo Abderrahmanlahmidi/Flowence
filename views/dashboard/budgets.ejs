@@ -1,138 +1,288 @@
-<% if ((typeof error !== "undefined" && error) || (typeof success !==
-"undefined" && success)) { %>
-<div id="toast" class="fixed top-5 right-5 z-50 flex items-center max-w-xs p-4 mb-4 rounded-lg shadow <%= error ? 'text-red-700 bg-red-50 border border-red-200 dark:text-red-400 dark:bg-red-900/20 dark:border-red-800' : '' %> <%= success ? 'text-green-700 bg-green-50 border border-green-200 dark:text-green-400 dark:bg-green-900/20 dark:border-green-800' : '' %>" role="alert">
-  <div class="text-sm font-medium flex-1"><%= error || success %></div>
-
-  <button type="button" onclick="this.parentElement.style.display='none'" class="<%= error ? 'ml-3 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300' : '' %> <%= success ? 'ml-3 text-green-500 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300' : '' %>">
-    ✕
-  </button>
-</div>
+<% if ((typeof error !== "undefined" && error) || (typeof success !== "undefined" && success)) { %>
+  <div id="toast" class="fixed top-5 right-5 z-50 flex items-center max-w-xs p-4 mb-4 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out <%= error ? 'text-red-800 bg-red-50 border border-red-200 dark:text-red-300 dark:bg-red-900/30 dark:border-red-800' : '' %> <%= success ? 'text-green-800 bg-green-50 border border-green-200 dark:text-green-300 dark:bg-green-900/30 dark:border-green-800' : '' %>" role="alert">
+    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg <%= error ? 'text-red-500 bg-red-100 dark:bg-red-800 dark:text-red-200' : '' %> <%= success ? 'text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-200' : '' %>">
+      <% if (error) { %>
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+        </svg>
+      <% } else if (success) { %>
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+      <% } %>
+    </div>
+    <div class="ml-3 text-sm font-medium flex-1"><%= error || success %></div>
+    <button type="button" onclick="hideToast()" class="ml-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 p-1.5 inline-flex h-8 w-8 <%= error ? 'text-red-500 hover:bg-red-200 focus:ring-red-400 dark:hover:bg-red-800' : '' %> <%= success ? 'text-green-500 hover:bg-green-200 focus:ring-green-400 dark:hover:bg-green-800' : '' %> transition-colors duration-200">
+      <span class="sr-only">Close</span>
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+      </svg>
+    </button>
+  </div>
 <% } %>
+
 <div class="space-y-6 mb-6">
   <!-- Page Header -->
-  <div class="flex items-center justify-between">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Budgets</h1>
-    <p class="text-gray-600 dark:text-gray-400">Manage your budgets</p>
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Budgets</h1>
+      <p class="text-gray-600 dark:text-gray-400 mt-1">Manage your budgets and track your spending</p>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <span><%= new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %></span>
+    </div>
   </div>
 
   <!-- Add Budget Form -->
-  <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
-    <h2 class="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-4">
+  <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+    <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
+      <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+      </svg>
       Add New Budget
     </h2>
     <form action="#" method="post" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      <input name="montantPrevu" type="number" placeholder="Montant prévu" class="p-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      <select name="categoryId" class="p-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <% categories.forEach(cat => { %>
-        <option value="<%= cat.id %>"><%= cat.name %></option>
-        <% }) %>
-      </select>
-      <input name="periode" type="date" class="p-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors col-span-1 md:col-span-4">
-        Add Budget
-      </button>
-    </form>
-  </div>
+      <div class="space-y-1">
+        <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Planned Amount</label>
+        <input name="montantPrevu" type="number" placeholder="0.00" step="0.01"
+               class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white transition-colors" />
+      </div>
 
- <div id="updateFormContainer" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden">
-  <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow w-96">
-    <h2 class="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-4">Update Budget</h2>
-    <form id="updateForm" method="POST">
-      <input type="number" name="montantPrevu" id="updateMontant" class="p-2 border rounded w-full mb-2"/>
-      <select name="categoryId" id="updateCategory" class="p-2 border rounded w-full mb-2">
-        <% categories.forEach(cat => { %>
-          <option value="<%= cat.id %>"><%= cat.name %></option>
-        <% }) %>
-      </select>
-      <input type="date" name="periode" id="updatePeriode" class="p-2 border rounded w-full mb-4"/>
-      <div class="flex justify-end gap-2">
-        <button type="button" onclick="closeUpdateForm()" class="px-4 py-2 bg-gray-400 rounded hover:bg-gray-500 text-white">Cancel</button>
-        <button type="submit" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-white">Update</button>
+      <div class="space-y-1">
+        <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Category</label>
+        <select name="categoryId" class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white transition-colors">
+          <option value="">Select a category</option>
+          <% categories.forEach(cat => { %>
+            <option value="<%= cat.id %>"><%= cat.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="space-y-1">
+        <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Period</label>
+        <input name="periode" type="month"
+               class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white transition-colors" />
+      </div>
+
+      <div class="space-y-1 md:flex md:items-end">
+        <button type="submit" class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all duration-200 font-medium flex items-center justify-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          Add Budget
+        </button>
       </div>
     </form>
   </div>
-</div>
 
+  <!-- Update Budget Modal -->
+  <div id="updateFormContainer" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-xl w-full max-w-md border border-slate-200 dark:border-slate-700 transform transition-all duration-300 ease-out">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+          <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+          </svg>
+          Update Budget
+        </h2>
+        <button onclick="closeUpdateForm()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
 
+      <form id="updateForm" method="POST" class="space-y-4">
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Planned Amount</label>
+          <input type="number" name="montantPrevu" id="updateMontant" step="0.01"
+                 class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-white transition-colors" required />
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Category</label>
+          <select name="categoryId" id="updateCategory"
+                  class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-white transition-colors">
+            <% categories.forEach(cat => { %>
+              <option value="<%= cat.id %>"><%= cat.name %></option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Period</label>
+          <input type="month" name="periode" id="updatePeriode"
+                 class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-white transition-colors" required />
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4">
+          <button type="button" onclick="closeUpdateForm()" class="px-6 py-2.5 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors font-medium">
+            Cancel
+          </button>
+          <button type="submit" class="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all duration-200 font-medium flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Update Budget
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Budgets Table -->
-  <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
-    <h2 class="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-4">
-      All Budgets
-    </h2>
-    <table class="min-w-full border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
-      <thead class="bg-slate-50 dark:bg-slate-700">
+  <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+      <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+        <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+        </svg>
+        Budget Overview
+      </h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700">
         <tr>
-          <th class="px-4 py-3 text-left text-sm font-medium text-slate-600 dark:text-slate-300">
+          <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
             Category
           </th>
-          <th class="px-4 py-3 text-left text-sm font-medium text-slate-600 dark:text-slate-300">
-            Montant prévu
+          <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+            Planned
           </th>
-          <th class="px-4 py-3 text-left text-sm font-medium text-slate-600 dark:text-slate-300">
-            Montant dépensé
+          <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+            Spent
           </th>
-          <th class="px-4 py-3 text-left text-sm font-medium text-slate-600 dark:text-slate-300">
-            Période
+          <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+            Remaining
           </th>
-          <th class="px-4 py-3 text-left text-sm font-medium text-slate-600 dark:text-slate-300">
-            Action
+          <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+            Period
+          </th>
+          <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+            Actions
           </th>
         </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
-        <% budgets.forEach(budget => { %>
-        <tr>
-          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">
-            <%= budget.Category ? budget.Category.name : "N/A" %>
+        </thead>
+        <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+        <% budgets.forEach(budget => {
+          const montantDepense = budget.montantDepense || 0;
+          const remaining = budget.montantPrevu - montantDepense;
+          const isOverBudget = remaining < 0;
+        %>
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-3">
+              <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+              <span class="text-sm font-medium text-slate-900 dark:text-white">
+                  <%= budget.Category ? budget.Category.name : "Uncategorized" %>
+                </span>
+            </div>
           </td>
-          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">
-            <%= budget.montantPrevu %> MAD
+          <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+            <%= budget.montantPrevu.toLocaleString() %> MAD
           </td>
-          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">
-            <%= budget.montantDepense || 0 %> MAD
+          <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+            <%= montantDepense.toLocaleString() %> MAD
           </td>
-          <td class="px-4 py-3 text-slate-600 dark:text-slate-400">
-            <%= budget.periode %>
+          <td class="px-6 py-4">
+              <span class="text-sm font-medium <%= isOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400' %>">
+                <%= remaining.toLocaleString() %> MAD
+              </span>
           </td>
+          <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+            <%= new Date(budget.periode).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %>
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-2">
+              <button onclick="openUpdateForm(<%= budget.id %>, <%= budget.montantPrevu %>, '<%= budget.periode %>', <%= budget.categoryId %>)"
+                      class="p-2 text-yellow-600 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 rounded-lg transition-colors duration-200"
+                      title="Edit budget">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+              </button>
 
-          <td class="px-4 py-3 text-center">
-            <form action="/dashboard/budgets/delete/<%= budget.id %>" method="POST" onsubmit="return confirm('Are you sure?');">
-              <button type="submit" class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
-                Delete
-              </button>
-              <button onclick="openUpdateForm(<%= budget.id %>, <%= budget.montantPrevu %>, '<%= budget.periode %>', <%= budget.categoryId %>)" type="button" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors">
-                Update
-              </button>
-            </form>
+              <form action="/dashboard/budgets/delete/<%= budget.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this budget?');" class="inline">
+                <button type="submit"
+                        class="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-200"
+                        title="Delete budget">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                </button>
+              </form>
+            </div>
           </td>
         </tr>
         <% }) %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+
+    <% if (budgets.length === 0) { %>
+      <div class="text-center py-12">
+        <svg class="w-16 h-16 text-slate-300 dark:text-slate-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-slate-600 dark:text-slate-400 mb-2">No budgets found</h3>
+        <p class="text-slate-500 dark:text-slate-500">Get started by creating your first budget above.</p>
+      </div>
+    <% } %>
   </div>
 </div>
 
-
-
 <script>
-function openUpdateForm(id, montantPrevu, categoryId, periode) {
-  document.getElementById("updateForm").action = "/dashboard/budgets/update/" + id;
-  document.getElementById("updateMontant").value = montantPrevu;
-  document.getElementById("updateCategory").value = categoryId;
-
-  if (periode && periode !== "null") {
-    const date = new Date(periode);
-    document.getElementById("updatePeriode").value = date.toISOString().split("T")[0];
-  } else {
-    document.getElementById("updatePeriode").value = "";
+  function hideToast() {
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.style.transform = 'translateX(100%)';
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 300);
+    }
   }
 
-  document.getElementById("updateFormContainer").classList.remove("hidden");
-}
+  // Auto-hide toast after 5 seconds
+  setTimeout(hideToast, 5000);
 
-function closeUpdateForm() {
-  document.getElementById("updateFormContainer").classList.add("hidden");
-}
+  function openUpdateForm(id, montantPrevu, periode, categoryId) {
+    document.getElementById("updateForm").action = "/dashboard/budgets/update/" + id;
+    document.getElementById("updateMontant").value = montantPrevu;
+    document.getElementById("updateCategory").value = categoryId;
+
+    if (periode && periode !== "null") {
+      const date = new Date(periode);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      document.getElementById("updatePeriode").value = `${year}-${month}`;
+    } else {
+      document.getElementById("updatePeriode").value = "";
+    }
+
+    document.getElementById("updateFormContainer").classList.remove("hidden");
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeUpdateForm() {
+    document.getElementById("updateFormContainer").classList.add("hidden");
+    document.body.style.overflow = 'auto';
+  }
+
+  // Close modal when clicking outside
+  document.getElementById('updateFormContainer').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeUpdateForm();
+    }
+  });
+
+  // Close modal with Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && !document.getElementById('updateFormContainer').classList.contains('hidden')) {
+      closeUpdateForm();
+    }
+  });
 </script>
-

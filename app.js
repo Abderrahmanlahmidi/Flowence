@@ -6,11 +6,9 @@ const path = require("path");
 const session = require("express-session");
 const SequelizeStoreLib = require("connect-session-sequelize");
 const sequelize = require("./config/db"); 
-const methodOverride = require("method-override");
 
 const app = express();
 
-app.use(methodOverride("_method"));
 
 // =======================
 // Session Store Setup
@@ -56,6 +54,7 @@ const routes = [
   { path: "/dashboard", route: require("./routes/dashboard/statics") },
   { path: "/dashboard", route: require("./routes/dashboard/categories") },
   { path: "/dashboard", route: require("./routes/dashboard/budgets") },
+  { path: "/dashboard", route: require("./routes/dashboard/transactions") }
 ];
 
 routes.forEach(({ path, route }) => {

@@ -84,10 +84,8 @@ router.post("/budgets/update/:id", requireAuth, async (req, res) => {
     );
     res.redirect("/dashboard/budgets?success=Budget updated successfully!");
   } catch (err) {
-    console.error(err);
     res.redirect("/dashboard/budgets?error=Error while updating budget");
   }
 });
-
 
 module.exports = router;
