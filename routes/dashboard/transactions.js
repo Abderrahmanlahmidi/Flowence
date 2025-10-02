@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { requireAuth } = require("../../Middlewares/authentication");
-const { Transaction, Category } = require("../../models");
+const { Transaction, Category, Budget } = require("../../models");
 const { where } = require("sequelize");
 
 router.get("/transactions", requireAuth, async (req, res) => {
@@ -11,7 +11,6 @@ router.get("/transactions", requireAuth, async (req, res) => {
   const transactions = await Transaction.findAll({
     where: { userId: req.session.user.id },
     include: [{ model: Category, attributes: ['name'] }],
-    order: [['date', 'DESC']]
   });
 
   res.render("dashboard/transactions", {
@@ -26,21 +25,38 @@ router.get("/transactions", requireAuth, async (req, res) => {
 });
 
 router.post("/transactions", requireAuth, async (req, res) => {
-  const { date, amount, categoryId, type, paymentMethod } = req.body;
+  let { date, amount, categoryId, type, paymentMethod } = req.body;
 
   if (!date || !amount || !categoryId || !type || !paymentMethod) {
     return res.redirect("/dashboard/transactions?error=All fields are required!");
   }
 
   try {
+    const amountNumber = parseFloat(amount);
+
     await Transaction.create({
       date,
-      amount,
+      amount: amountNumber,
       categoryId,
       type,
       paymentMethod,
       userId: req.session.user.id,
     });
+
+    const budget = await Budget.findOne({
+      where: { userId: req.session.user.id, categoryId },
+    });
+
+    if (budget) {
+      let cleanAmount = parseFloat(String(amount).replace(/[^\d.-]/g, ""));
+      if (type === "Expense") {
+        budget.montantPrevu -= cleanAmount;
+      } else if (type === "Income") {
+        budget.montantPrevu += cleanAmount;
+      }
+      await budget.save();
+    }
+
     return res.redirect(
         "/dashboard/transactions?success=Transaction created successfully!"
     );

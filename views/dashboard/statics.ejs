@@ -24,7 +24,13 @@
           </svg>
           Recent Expenses
         </h2>
-        <p class="mt-2 text-2xl font-bold text-blue-600">Current Balance: 1000 USD</p>
+        <p class="mt-2 text-2xl font-bold text-blue-600">
+          Current Balance:
+           <span class="mt-2 text-2xl font-bold text-blue-600">
+            <%= total %>
+           </span>
+          MAD
+        </p>
       </div>
     </div>
 
@@ -39,30 +45,20 @@
         </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
+        <% lastTransactions.forEach(tr => { %>
         <tr class="hover:bg-gray-50 transition-colors">
-          <td class="px-6 py-4 text-sm text-gray-600">2025-09-27</td>
+          <td class="px-6 py-4 text-sm text-gray-600"><%=tr.date.toISOString().split('T')[0]%></td>
           <td class="px-6 py-4">
-            <span class="text-sm font-medium text-red-600">50 USD</span>
-          </td>
-          <td class="px-6 py-4">
-            <div class="flex items-center gap-2">
-              <div class="w-2 h-2 rounded-full bg-blue-500"></div>
-              <span class="text-sm text-gray-600">Food</span>
-            </div>
-          </td>
-        </tr>
-        <tr class="hover:bg-gray-50 transition-colors">
-          <td class="px-6 py-4 text-sm text-gray-600">2025-09-26</td>
-          <td class="px-6 py-4">
-            <span class="text-sm font-medium text-red-600">120 USD</span>
+            <span class="text-sm font-medium text-red-600"><%= tr.amount %> MAD</span>
           </td>
           <td class="px-6 py-4">
             <div class="flex items-center gap-2">
               <div class="w-2 h-2 rounded-full bg-green-500"></div>
-              <span class="text-sm text-gray-600">Transport</span>
+              <span class="text-sm text-gray-600"><%= tr.Category.name %></span>
             </div>
           </td>
         </tr>
+        <% }) %>
         </tbody>
       </table>
     </div>
