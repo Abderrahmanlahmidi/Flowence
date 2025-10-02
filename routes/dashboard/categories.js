@@ -13,18 +13,25 @@ router.post("/categories", requireAuth, async (req, res) => {
   }
 
   try {
+    const categories = await Category.findAll({ where: { userId } });
+    const category = categories.map(cat => cat.get({ plain: true }));
+
+    // check if already exists
+    const available = category.some(cat => cat.name.toLowerCase() === name.toLowerCase());
+
+    if (available) {
+      return res.redirect("/dashboard/categories?error=This category already exists!");
+    }
+
     await Category.create({ name, description, userId });
 
-    return res.redirect(
-      "/dashboard/categories?success=Category created successfully!"
-    );
+    return res.redirect("/dashboard/categories?success=Category created successfully!");
   } catch (err) {
     console.error(err);
-    return res.redirect(
-      "/dashboard/categories?error=Error while creating category"
-    );
+    return res.redirect("/dashboard/categories?error=Error while creating category");
   }
 });
+
 
 router.get("/categories", requireAuth, async (req, res) => {
   const categories = await Category.findAll({
@@ -38,7 +45,6 @@ router.get("/categories", requireAuth, async (req, res) => {
     categories: categories.map((cat) => cat.get({ plain: true })),
   });
 });
-
 
 router.post("/category/delete/:id", requireAuth, async (req, res) => {
   const categoryId = req.params.id;

@@ -2,8 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const SavingGoal = sequelize.define("SavingGoal", {
     title: DataTypes.STRING,
-    targetAmount: DataTypes.DECIMAL,
-    currentAmount: DataTypes.DECIMAL,
+    targetAmount: DataTypes.FLOAT,
     deadline: DataTypes.DATE
   });
 

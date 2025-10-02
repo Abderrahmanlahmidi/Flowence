@@ -32,9 +32,9 @@ router.post("/transactions", requireAuth, async (req, res) => {
   }
 
   try {
-    const amountNumber = parseFloat(amount);
-
-    await Transaction.create({
+    const amountNumber = parseFloat(String(amount).replace(/[^\d.-]/g, ""));
+    
+    const transaction = await Transaction.create({
       date,
       amount: amountNumber,
       categoryId,
@@ -48,23 +48,28 @@ router.post("/transactions", requireAuth, async (req, res) => {
     });
 
     if (budget) {
-      let cleanAmount = parseFloat(String(amount).replace(/[^\d.-]/g, ""));
       if (type === "Expense") {
-        budget.montantPrevu -= cleanAmount;
+        if (budget.montantPrevu >= amountNumber) {
+          budget.montantPrevu -= amountNumber;
+          budget.montantDepense = parseFloat(budget.montantDepense) + amountNumber;
+          await budget.save();
+        } else {
+          await transaction.destroy();
+          return res.redirect("/dashboard/transactions?error=The budget is less than the transaction amount.");
+        }
       } else if (type === "Income") {
-        budget.montantPrevu += cleanAmount;
+        budget.montantPrevu += amountNumber;
+        await budget.save();
       }
-      await budget.save();
     }
 
-    return res.redirect(
-        "/dashboard/transactions?success=Transaction created successfully!"
-    );
+    return res.redirect("/dashboard/transactions?success=Transaction created successfully!");
   } catch (e) {
     console.error(e);
     return res.redirect("/dashboard/transactions?error=Error creating transaction!");
   }
 });
+
 
 router.post("/transactions/update/:id", requireAuth, async (req, res) => {
   const { id } = req.params;

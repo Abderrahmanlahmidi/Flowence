@@ -7,6 +7,7 @@ router.get("/", requireAuth, async (req, res) => {
   try {
     const budgets = await Budget.findAll({
       where: { userId: req.session.user.id },
+      include:[{model:Category}]
     });
 
     const budget = budgets.map((bud) => bud.get({ plain: true }));
@@ -23,9 +24,8 @@ router.get("/", requireAuth, async (req, res) => {
     const transaction = Transactions.map((tr) => tr.get({ plain: true }));
     const lastThreeTransactions = transaction.slice(-3);
 
-    console.log("budgets:", budget);
-
     res.render("dashboard/statics", {
+      budget:budget,
       lastTransactions: lastThreeTransactions,
       total: total,
       layout: "layouts/dashboard",

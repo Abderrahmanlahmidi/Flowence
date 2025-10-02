@@ -88,7 +88,7 @@
             <td class="px-6 py-4 text-sm text-gray-600"><%= tr.date.toISOString().split('T')[0] %></td>
             <td class="px-6 py-4">
               <span class="text-sm font-medium <%= tr.type === 'Income' ? 'text-green-600' : 'text-red-600' %>">
-                $<%= parseFloat(tr.amount).toFixed(2) %>
+                 <%= parseFloat(tr.amount).toFixed(2) %> MAD
               </span>
             </td>
             <td class="px-6 py-4">
