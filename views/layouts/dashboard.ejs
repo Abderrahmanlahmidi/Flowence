@@ -30,9 +30,6 @@
       <a href="/dashboard/budgets" class="px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">Budgets</a>
       <a href="/dashboard/transactions" class="px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">Transactions</a>
       <a href="/dashboard/savings" class="px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">Savings Goals</a>
-      <a href="/dashboard/reports" class="px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">Reports</a>
-      <a href="/dashboard/export" class="px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">Export CSV</a>
-      <a href="/dashboard/settings" class="px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">Settings</a>
     </nav>
 
     <!-- User Profile Section -->
@@ -42,8 +39,8 @@
           JD
         </div>
         <div class="flex-1 min-w-0">
-          <div class="font-medium text-gray-900 truncate"></div>
-          <div class="text-xs text-gray-500 truncate"></div>
+          <div class="font-medium text-gray-900 truncate"><%= user.firstName %> <%= user.lastName %></div>
+          <div class="text-xs text-gray-500 truncate"><%= user.email %></div>
         </div>
       </div>
 

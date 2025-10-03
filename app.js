@@ -55,7 +55,8 @@ const routes = [
   { path: "/dashboard", route: require("./routes/dashboard/categories") },
   { path: "/dashboard", route: require("./routes/dashboard/budgets") },
   { path: "/dashboard", route: require("./routes/dashboard/transactions") },
-  { path: "/dashboard", route: require("./routes/dashboard/savings") }
+  { path: "/dashboard", route: require("./routes/dashboard/savings") },
+  { path: "/dashboard", route: require("./routes/dashboard/profile") }
 ];
 
 routes.forEach(({ path, route }) => {
