@@ -1,26 +1,144 @@
-<div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-8 px-4">
-    <div class="max-w-2xl w-full text-center">
-        <!-- Header -->
-        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-            Welcome to Flowence
-        </h1>
+<div class="min-h-screen flex flex-col items-center justify-center bg-blue-50 py-8 px-4">
+    <div class="max-w-4xl w-full">
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+            <div class="flex justify-center mb-6">
+                <div class="w-20 h-20 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gray-900">
+                Flowence
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-700 mb-4 font-medium">
+                Smart Finance Management
+            </p>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Take control of your finances with powerful budgeting tools, expense tracking, 
+                and intelligent insights all in one place.
+            </p>
+        </div>
 
-        <!-- Paragraph -->
-        <p class="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
-            Streamline your workflow and collaborate with your team efficiently.
-            Get started today and experience the difference.
-        </p>
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-gray-900">95%</p>
+                        <p class="text-sm text-gray-600">Budget Accuracy</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-gray-900">24/7</p>
+                        <p class="text-sm text-gray-600">Real-time Tracking</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-gray-900">10K+</p>
+                        <p class="text-sm text-gray-600">Active Users</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <!-- Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/users/login"
-               class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
-                Login
-            </a>
-            <a href="/users/register"
-               class="px-6 py-3 bg-gray-800 hover:bg-gray-900 text-white font-medium rounded-lg transition-colors">
-                Register
-            </a>
+        <!-- Action Section -->
+        <div class="text-center">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <% if (typeof user !== 'undefined' && user) { %>
+                    <!-- Show Dashboard button if user is logged in -->
+                    <a href="/dashboard"
+                       class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-sm hover:shadow-md">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        Go to Dashboard
+                    </a>
+                    <a href="/users/logout"
+                       class="px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                        Logout
+                    </a>
+                <% } else { %>
+                    <!-- Show Login/Register buttons if user is not logged in -->
+                    <a href="/users/login"
+                       class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-sm hover:shadow-md">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                        </svg>
+                        Get Started
+                    </a>
+                    <a href="/users/register"
+                       class="px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                        </svg>
+                        Create Account
+                    </a>
+                <% } %>
+            </div>
+            
+            <!-- Features List -->
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              <div class="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200">
+    <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center">
+        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+        </svg>
+    </div>
+    <span class="text-gray-700 font-medium">Smart Budgeting</span>
+</div>
+<div class="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200">
+    <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+        </svg>
+    </div>
+    <span class="text-gray-700 font-medium">Expense Tracking</span>
+</div>
+<div class="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200">
+    <div class="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+    </div>
+    <span class="text-gray-700 font-medium">Secure & Private</span>
+</div>
+<div class="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200">
+    <div class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
+        <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+    </div>
+    <span class="text-gray-700 font-medium">Real-time Reports</span>
+</div>
+            </div>
         </div>
     </div>
 </div>
