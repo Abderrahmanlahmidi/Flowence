@@ -35,6 +35,7 @@ store.sync();
 // =======================
 app.use(expressLayouts);
 app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("layout", "layouts/main");

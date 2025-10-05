@@ -1,199 +1,234 @@
-<div class="space-y-6 mb-6">
+<div class="space-y-8 mb-6">
   <!-- Page Header -->
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-    <div>
-      <h1 class="text-2xl font-bold text-gray-900">Recent Expenses</h1>
-      <p class="text-gray-600 mt-1">Track your latest spending</p>
+  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+    <div class="space-y-2">
+      <h1 class="text-3xl font-bold text-gray-900">Financial Overview</h1>
+      <p class="text-gray-600 text-lg">Monitor your spending and budget performance</p>
     </div>
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-6">
       <!-- Notification Dropdown -->
       <div class="dropdown dropdown-end">
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+        <div tabindex="0" role="button" class="relative p-2 rounded-lg hover:bg-gray-100 transition-colors">
           <div class="indicator">
-            <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
             </svg>
-            <span class="badge badge-xs badge-primary indicator-item"></span>
+            <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
           </div>
         </div>
-        <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-80 bg-base-100 shadow border border-gray-200">
-          <div class="card-body">
-            <span class="font-bold text-lg">Notifications</span>
-            <div class="space-y-3 mt-2 max-h-60 overflow-y-auto">
+        <div tabindex="0" class="mt-3 z-[1] dropdown-content w-96 bg-white shadow-xl rounded-xl border border-gray-200">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-gray-900">Notifications</h3>
+              <span class="text-sm text-blue-600 font-medium">3 new</span>
+            </div>
+            <div class="space-y-4 max-h-80 overflow-y-auto">
               <!-- Budget Alert -->
-              <div class="flex items-start space-x-3 p-3 rounded-lg bg-blue-50 border border-blue-200">
-                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="flex gap-4 p-4 rounded-lg border border-blue-200 bg-blue-50">
+                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                   </svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <div class="text-sm font-medium text-gray-900">Budget Alert</div>
-                  <div class="text-xs text-gray-600 mt-1">You've exceeded your dining budget by 150 MAD</div>
-                  <div class="text-xs text-gray-500 mt-1">2 hours ago</div>
+                  <div class="flex items-start justify-between">
+                    <div class="text-sm font-semibold text-gray-900">Budget Alert</div>
+                    <span class="text-xs text-gray-500">2h ago</span>
+                  </div>
+                  <p class="text-sm text-gray-600 mt-1">You've exceeded your dining budget by 150 MAD</p>
                 </div>
               </div>
-              
+
               <!-- Upcoming Bill -->
-              <div class="flex items-start space-x-3 p-3 rounded-lg bg-yellow-50 border border-yellow-200">
-                <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="flex gap-4 p-4 rounded-lg border border-yellow-200 bg-yellow-50">
+                <div class="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <div class="text-sm font-medium text-gray-900">Upcoming Bill</div>
-                  <div class="text-xs text-gray-600 mt-1">Netflix subscription due in 3 days</div>
-                  <div class="text-xs text-gray-500 mt-1">5 hours ago</div>
+                  <div class="flex items-start justify-between">
+                    <div class="text-sm font-semibold text-gray-900">Upcoming Bill</div>
+                    <span class="text-xs text-gray-500">5h ago</span>
+                  </div>
+                  <p class="text-sm text-gray-600 mt-1">Netflix subscription due in 3 days</p>
                 </div>
               </div>
-              
+
               <!-- Savings Goal -->
-              <div class="flex items-start space-x-3 p-3 rounded-lg bg-green-50 border border-green-200">
-                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="flex gap-4 p-4 rounded-lg border border-green-200 bg-green-50">
+                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                   </svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <div class="text-sm font-medium text-gray-900">Savings Goal</div>
-                  <div class="text-xs text-gray-600 mt-1">You're 75% towards your vacation goal</div>
-                  <div class="text-xs text-gray-500 mt-1">1 day ago</div>
+                  <div class="flex items-start justify-between">
+                    <div class="text-sm font-semibold text-gray-900">Savings Goal</div>
+                    <span class="text-xs text-gray-500">1d ago</span>
+                  </div>
+                  <p class="text-sm text-gray-600 mt-1">You're 75% towards your vacation goal</p>
                 </div>
               </div>
             </div>
-            <div class="card-actions justify-end mt-4">
-              <button class="btn btn-sm btn-ghost text-blue-600">View All</button>
+            <div class="mt-6 pt-4 border-t border-gray-200">
+              <button class="w-full py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                View All Notifications
+              </button>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Date Display -->
-      <div class="flex items-center gap-2 text-sm text-gray-500">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        <span><%= new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %></span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Recent Expenses Table with Current Balance on top -->
-  <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-    <!-- Header with Current Balance -->
-    <div class="flex items-center justify-between mb-6">
-      <div>
-        <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
-          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-          </svg>
-          Recent Expenses
-        </h2>
-        <p class="mt-2 text-2xl font-bold text-blue-600">
-          Current Balance:
-           <span class="mt-2 text-2xl font-bold text-blue-600">
-            <%= total %>
-           </span>
-          MAD
-        </p>
-      </div>
-      <a href="/dashboard/savings/export/csv" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-200 transition-all duration-200 font-medium flex items-center justify-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-        </svg>
-        Export Report
-      </a>
-    </div>
-
-    <!-- Table -->
-    <div class="overflow-x-auto">
-      <table class="w-full">
-        <thead class="bg-gray-50 border-b border-gray-200">
-        <tr>
-          <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date</th>
-          <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Amount</th>
-          <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Category</th>
-        </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-        <% lastTransactions.forEach(tr => { %>
-        <tr class="hover:bg-gray-50 transition-colors">
-          <td class="px-6 py-4 text-sm text-gray-600"><%=tr.date.toISOString().split('T')[0]%></td>
-          <td class="px-6 py-4">
-            <span class="text-sm font-medium text-red-600"><%= tr.amount %> MAD</span>
-          </td>
-          <td class="px-6 py-4">
-            <div class="flex items-center gap-2">
-              <div class="w-2 h-2 rounded-full bg-green-500"></div>
-              <span class="text-sm text-gray-600"><%= tr.Category.name %></span>
-            </div>
-          </td>
-        </tr>
-        <% }) %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Bottom Row: Graph Full Width -->
-  <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+      <div class="flex items-center gap-3 px-4 py-2 bg-white rounded-lg border border-gray-200">
         <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
         </svg>
-        Expense Chart
-      </h2>
+        <span class="text-sm font-medium text-gray-700">
+          <%= new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %>
+        </span>
+      </div>
     </div>
-    <div class="w-full h-64">
-    <canvas id="myChart"></canvas>
   </div>
+
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+    <!-- Left Column - Recent Expenses -->
+    <div class="xl:col-span-2 space-y-8">
+      <!-- Balance Card -->
+      <div class="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 text-white">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-blue-100 text-sm font-medium">Current Balance</p>
+            <p class="text-3xl font-bold mt-2"><%= total %> MAD</p>
+            <p class="text-blue-100 text-sm mt-2">Updated just now</p>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-blue-500 bg-opacity-20 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Expenses Card -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-200">
+        <div class="p-6 border-b border-gray-200">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-semibold text-gray-900">Recent Transactions</h2>
+            <a href="/dashboard/savings/export/csv" class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              Export Report
+            </a>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="overflow-hidden rounded-lg border border-gray-200">
+            <table class="w-full">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Date</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Amount</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Category</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <% lastTransactions.forEach(tr => { %>
+                <tr class="hover:bg-gray-50 transition-colors">
+                  <td class="px-6 py-4 text-sm text-gray-900 font-medium">
+                    <%=tr.date.toISOString().split('T')[0]%>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-700">
+                      <%= tr.amount %> MAD
+                    </span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                      <span class="text-sm text-gray-700 font-medium">
+                        <%= tr.Category.name %>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column - Chart -->
+    <div class="space-y-8">
+      <!-- Expense Chart Card -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-semibold text-gray-900">Budget Distribution</h2>
+          <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="w-full h-80">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-
   const budgets = <%- JSON.stringify(budget) %>;
-
   const labels = budgets.map(b => b.Category.name);
   const data = budgets.map(b => b.montantPrevu);
 
   const ctx = document.getElementById('myChart').getContext('2d');
-
   new Chart(ctx, {
-    type: 'bar',
+    type: 'doughnut',
     data: {
       labels: labels,
       datasets: [{
-        label: 'Planned Budget',
         data: data,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 206, 86, 0.5)',
-          'rgba(75, 192, 192, 0.5)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, 159, 64, 0.5)'
+          'rgba(59, 130, 246, 0.8)',
+          'rgba(16, 185, 129, 0.8)',
+          'rgba(245, 158, 11, 0.8)',
+          'rgba(139, 92, 246, 0.8)',
+          'rgba(239, 68, 68, 0.8)',
+          'rgba(14, 165, 233, 0.8)'
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
+          'rgb(59, 130, 246)',
+          'rgb(16, 185, 129)',
+          'rgb(245, 158, 11)',
+          'rgb(139, 92, 246)',
+          'rgb(239, 68, 68)',
+          'rgb(14, 165, 233)'
         ],
-        borderWidth: 1
+        borderWidth: 2,
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      scales: {
-        y: { beginAtZero: true }
-      }
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            padding: 20,
+            usePointStyle: true,
+            pointStyle: 'circle'
+          }
+        }
+      },
+      cutout: '60%'
     }
   });
-
 </script>

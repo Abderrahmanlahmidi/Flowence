@@ -16,7 +16,6 @@ router.post("/categories", requireAuth, async (req, res) => {
     const categories = await Category.findAll({ where: { userId } });
     const category = categories.map(cat => cat.get({ plain: true }));
 
-    // check if already exists
     const available = category.some(cat => cat.name.toLowerCase() === name.toLowerCase());
 
     if (available) {
