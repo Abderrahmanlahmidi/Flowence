@@ -1,4 +1,3 @@
-// models/Transaction.js
 module.exports = (sequelize, DataTypes) => {
   const Transaction = sequelize.define("Transaction", {
     amount: DataTypes.DECIMAL,

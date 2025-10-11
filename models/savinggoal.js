@@ -1,4 +1,3 @@
-// models/SavingGoal.js
 module.exports = (sequelize, DataTypes) => {
   const SavingGoal = sequelize.define("SavingGoal", {
     title: DataTypes.STRING,

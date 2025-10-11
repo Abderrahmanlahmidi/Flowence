@@ -1,6 +1,6 @@
 function redirectIfAuth(req, res, next) {
     if(req.session.user) {
-        return res.redirect("/dashboard/statics")
+        return res.redirect("/dashboard")
     }
     next();
 }

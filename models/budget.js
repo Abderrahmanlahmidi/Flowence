@@ -1,4 +1,3 @@
-// models/Budget.js
 module.exports = (sequelize, DataTypes) => {
   const Budget = sequelize.define("Budget", {
     montantPrevu: DataTypes.DECIMAL,

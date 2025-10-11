@@ -1,160 +1,275 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4">
+<div class="min-h-screen flex items-center justify-center bg-white py-8 px-4">
     <div class="max-w-md w-full">
-
-        <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
-
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">Create Account</h2>
-                <p class="text-gray-600 mt-2">Join Flowence today</p>
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="flex justify-center items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900">Flowence</h1>
             </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Create Your Account</h2>
+            <p class="text-gray-600">Join thousands managing their finances smarter</p>
+        </div>
 
+        <!-- Success/Error Messages -->
+        <% if (success) { %>
+            <div class="mb-6 p-4 border border-green-200 bg-green-50 rounded-xl flex items-center gap-3 animate-fade-in">
+                <svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <p class="text-green-700 text-sm font-medium">
+                    Account created successfully! Redirecting...
+                </p>
+            </div>
+            <script>
+                setTimeout(() => {
+                    window.location.href = "/users/login";
+                }, 2000);
+            </script>
+        <% } %>
 
-            <% if (success) { %>
-                <div class="mb-6 p-3 border border-green-200 bg-green-50 rounded-lg">
-                    <p class="text-green-700 text-sm font-medium">
-                        Account created successfully!
-                    </p>
-                </div>
-                <script>
-                    setTimeout(() => {
-                        window.location.href = "/users/login";
-                    }, 3000);
-                </script>
-            <% }%>
+        <% if (error) { %>
+            <div class="mb-6 p-4 border border-red-200 bg-red-50 rounded-xl flex items-center gap-3 animate-fade-in">
+                <svg class="w-5 h-5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <p class="text-red-700 text-sm font-medium">
+                    <%= error %>
+                </p>
+            </div>
+        <% } %>
 
-            <% if (error) { %>
-                <div class="mb-6 p-3 border border-red-200 bg-red-50 rounded-lg">
-                    <p class="text-red-700 text-sm font-medium">
-                        <%= error %>
-                    </p>
-                </div>
-            <% } %>
-
-            <form id="registerForm" action="/users/register" method="POST">
-                <div class="space-y-4">
-                    <div>
-                        <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900">
+        <!-- Registration Form -->
+        <div class="bg-white p-8 rounded-2xl border border-gray-200">
+            <form id="registerForm" action="/users/register" method="POST" class="space-y-5">
+                <!-- Name Fields -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label for="firstName" class="block text-sm font-semibold text-gray-900">
                             First Name
                         </label>
-                        <input type="text" id="firstName" name="firstName"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                               placeholder="Enter your first name">
+                        <div class="relative">
+                            <input type="text" id="firstName" name="firstName"
+                                   class="w-full p-3.5 pl-11 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 transition-all duration-200"
+                                   placeholder="John">
+                            <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
                         <p id="fName-error" class="text-red-600 text-sm mt-1"></p>
                     </div>
 
-                    <div>
-                        <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900">
+                    <div class="space-y-2">
+                        <label for="lastName" class="block text-sm font-semibold text-gray-900">
                             Last Name
                         </label>
-                        <input type="text" id="lastName" name="lastName"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                               placeholder="Enter your last name">
+                        <div class="relative">
+                            <input type="text" id="lastName" name="lastName"
+                                   class="w-full p-3.5 pl-11 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 transition-all duration-200"
+                                   placeholder="Doe">
+                            <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
                         <p id="lName-error" class="text-red-600 text-sm mt-1"></p>
                     </div>
-
-                    <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
-                            Email Address
-                        </label>
-                        <input type="email" id="email" name="email"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                               placeholder="name@flowence.com">
-                        <p id="email-error" class="text-red-600 text-sm mt-1"></p>
-                    </div>
-
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">
-                            Password
-                        </label>
-                        <input type="password" id="password" name="password"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                               placeholder="••••••••">
-                        <p id="password-error" class="text-red-600 text-sm mt-1"></p>
-                    </div>
-
-                    <div>
-                        <label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-900">
-                            Confirm Password
-                        </label>
-                        <input type="password" id="confirmPassword" name="confirmPassword"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                               placeholder="••••••••">
-                        <p id="confirmPassword-error" class="text-red-600 text-sm mt-1"></p>
-                    </div>
-
-                    <button type="submit"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full">
-                        Create Account
-                    </button>
                 </div>
+
+                <!-- Email Field -->
+                <div class="space-y-2">
+                    <label for="email" class="block text-sm font-semibold text-gray-900">
+                        Email Address
+                    </label>
+                    <div class="relative">
+                        <input type="email" id="email" name="email"
+                               class="w-full p-3.5 pl-11 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 transition-all duration-200"
+                               placeholder="name@flowence.com">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                        </svg>
+                    </div>
+                    <p id="email-error" class="text-red-600 text-sm mt-1"></p>
+                </div>
+
+                <!-- Password Field -->
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-semibold text-gray-900">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="password" name="password"
+                               class="w-full p-3.5 pl-11 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 transition-all duration-200"
+                               placeholder="Create a password">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        <button type="button" id="togglePassword" class="absolute right-3.5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+                            <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                            <svg id="eyeOffIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L6.59 6.59m9.02 9.02l3.411 3.411"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <p id="password-error" class="text-red-600 text-sm mt-1"></p>
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div class="space-y-2">
+                    <label for="confirmPassword" class="block text-sm font-semibold text-gray-900">
+                        Confirm Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="confirmPassword" name="confirmPassword"
+                               class="w-full p-3.5 pl-11 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 transition-all duration-200"
+                               placeholder="Confirm your password">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                        <button type="button" id="toggleConfirmPassword" class="absolute right-3.5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+                            <svg id="eyeIconConfirm" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                            <svg id="eyeOffIconConfirm" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L6.59 6.59m9.02 9.02l3.411 3.411"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <p id="confirmPassword-error" class="text-red-600 text-sm mt-1"></p>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                        class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-xl hover:from-blue-700 hover:to-indigo-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 font-semibold shadow-sm mt-2">
+                    Create Account
+                </button>
             </form>
 
             <!-- Login Link -->
             <div class="text-center mt-6 pt-6 border-t border-gray-200">
                 <p class="text-gray-600 text-sm">
                     Already have an account?
-                    <a href="/users/login" class="text-blue-600 hover:underline font-medium">Sign in here</a>
+                    <a href="/users/login" class="text-blue-600 hover:text-blue-700 font-semibold transition-colors">Sign in here</a>
                 </p>
             </div>
         </div>
     </div>
 </div>
 
+<style>
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
 <script>
-    const registerForm = document.getElementById("registerForm");
+// Password toggle functionality
+document.getElementById('togglePassword').addEventListener('click', function() {
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const eyeOffIcon = document.getElementById('eyeOffIcon');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.classList.add('hidden');
+        eyeOffIcon.classList.remove('hidden');
+    } else {
+        passwordInput.type = 'password';
+        eyeIcon.classList.remove('hidden');
+        eyeOffIcon.classList.add('hidden');
+    }
+});
 
-    registerForm.addEventListener("submit", (e) => {
-        let isValid = true;
+document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const eyeIconConfirm = document.getElementById('eyeIconConfirm');
+    const eyeOffIconConfirm = document.getElementById('eyeOffIconConfirm');
+    
+    if (confirmPasswordInput.type === 'password') {
+        confirmPasswordInput.type = 'text';
+        eyeIconConfirm.classList.add('hidden');
+        eyeOffIconConfirm.classList.remove('hidden');
+    } else {
+        confirmPasswordInput.type = 'password';
+        eyeIconConfirm.classList.remove('hidden');
+        eyeOffIconConfirm.classList.add('hidden');
+    }
+});
 
-        const fName = document.getElementById("firstName").value.trim();
-        const lName = document.getElementById("lastName").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirmPassword").value;
+const registerForm = document.getElementById("registerForm");
 
-        const fNameError = document.getElementById("fName-error");
-        const lNameError = document.getElementById("lName-error");
-        const emailError = document.getElementById("email-error");
-        const passwordError = document.getElementById("password-error");
-        const confirmPasswordError = document.getElementById("confirmPassword-error");
+registerForm.addEventListener("submit", (e) => {
+    let isValid = true;
 
-        fNameError.textContent = "";
-        lNameError.textContent = "";
-        emailError.textContent = "";
-        passwordError.textContent = "";
-        confirmPasswordError.textContent = "";
+    const fName = document.getElementById("firstName").value.trim();
+    const lName = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-        const nameRegex = /^[a-zA-Z]{1,30}$/;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const fNameError = document.getElementById("fName-error");
+    const lNameError = document.getElementById("lName-error");
+    const emailError = document.getElementById("email-error");
+    const passwordError = document.getElementById("password-error");
+    const confirmPasswordError = document.getElementById("confirmPassword-error");
 
-        if (!nameRegex.test(fName)) {
-            fNameError.textContent = "First name must be 1-30 letters.";
-            isValid = false;
-        }
 
-        if (!nameRegex.test(lName)) {
-            lNameError.textContent = "Last name must be 1-30 letters.";
-            isValid = false;
-        }
-
-        if (!emailRegex.test(email)) {
-            emailError.textContent = "Please enter a valid email address.";
-            isValid = false;
-        }
-
-        if (password.length < 6) {
-            passwordError.textContent = "Password must be at least 6 characters.";
-            isValid = false;
-        }
-
-        if (confirmPassword !== password) {
-            confirmPasswordError.textContent = "Passwords do not match.";
-            isValid = false;
-        }
-
-        if (!isValid) {
-            e.preventDefault();
-        }
+    [fNameError, lNameError, emailError, passwordError, confirmPasswordError].forEach(error => {
+        error.textContent = "";
     });
 
+    const nameRegex = /^[a-zA-Z]{1,30}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!nameRegex.test(fName)) {
+        fNameError.textContent = "First name must be 1-30 letters.";
+        isValid = false;
+    }
+
+    if (!nameRegex.test(lName)) {
+        lNameError.textContent = "Last name must be 1-30 letters.";
+        isValid = false;
+    }
+
+    if (!emailRegex.test(email)) {
+        emailError.textContent = "Please enter a valid email address.";
+        isValid = false;
+    }
+
+    if (password.length < 6) {
+        passwordError.textContent = "Password must be at least 6 characters.";
+        isValid = false;
+    }
+
+    if (confirmPassword !== password) {
+        confirmPasswordError.textContent = "Passwords do not match.";
+        isValid = false;
+    }
+
+    if (!isValid) {
+        e.preventDefault();
+    }
+});
+
+const inputs = document.querySelectorAll('input');
+inputs.forEach(input => {
+    input.addEventListener('focus', function() {
+        this.parentElement.classList.add('ring-2', 'ring-blue-200');
+    });
+    
+    input.addEventListener('blur', function() {
+        this.parentElement.classList.remove('ring-2', 'ring-blue-200');
+    });
+});
 </script>
